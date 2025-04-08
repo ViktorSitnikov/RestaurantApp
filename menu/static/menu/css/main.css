@@ -42,6 +42,7 @@ a.menu-icon > i:hover {
             justify-content: center;
         }
         .menu-card {
+            width: 200px;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
@@ -49,8 +50,8 @@ a.menu-icon > i:hover {
             margin: 15px;
             user-select: none;
             -webkit-user-select: none;
-            position: relative; /* Для позиционирования кнопки */
-            flex: 1 0 200px;
+            position: relative;
+         /*   flex: 1 0 200px; */
         }
         .menu-card:hover {
             transform: translateY(-5px);
@@ -146,7 +147,6 @@ a.menu-icon > i:hover {
 
 
 /* Стили модального окна */
-/* Стили для модального окна */
 .modal-content {
     border-radius: 15px;
     overflow: hidden;
