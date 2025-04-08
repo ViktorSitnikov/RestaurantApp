@@ -1,0 +1,164 @@
+/* Общие стили */
+i {
+    color: #6A994E;
+}
+
+main {
+    padding: 0px, 10%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: stretch;
+}
+
+
+
+/* Стили для Header */
+header {
+    background-color: #386641;
+}
+
+a.menu-icon > i {
+    font-size: 25px;
+    color: #F2E8CF;
+    transition: color 0.3s ease;
+}
+
+a.menu-icon > i:hover {
+    color: #A7C957;
+    transition: color 0.3s ease;
+}
+
+
+
+
+
+
+/* Стили для блюд в меню */
+        .menu-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .menu-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            margin: 15px;
+            user-select: none;
+            -webkit-user-select: none;
+            position: relative; /* Для позиционирования кнопки */
+            flex: 1 0 200px;
+        }
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .menu-img {
+            height: 160px;
+            background-color: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6c757d;
+        }
+        .menu-img > img {
+            Height: 100%;
+            width: 100%;
+        }
+        .menu-body {
+            padding: 15px 15px 0px 15px;
+        }
+        .menu-title {
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            font-weight: 600;
+            height: 30px;
+        }
+        .menu-details {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+        }
+        .menu-weight {
+            color: #6c757d;
+        }
+        .menu-price {
+            font-weight: bold;
+        }
+        .add-btn {
+            width: 100%
+            border-radius: 5px;
+            margin-bottom: 15px;
+        }
+
+
+/* Стили для Сайдбара */
+    .sidebar {
+        position: -webkit-sticky;
+        position: sticky;
+        top: 25%;
+        height: min-content;
+        background-color: #F2E8CF;
+        overflow-y: auto;
+        border-radius: 20px;
+        padding: 20px;
+    }
+    .category-section {
+        scroll-margin-top: 80px; /* Отступ для фиксированного header */
+    }
+
+    /* Стили для ссылок сайдбара */
+    .category-link {
+        text-align: left;
+        color: #6A994E;
+    }
+    a.nav-link:focus {
+    color: #6A994E;
+    }
+    .category-link.active {
+        background-color: #A7C957;
+        color: white !important;
+        border-radius: 5px;
+        color: #386641;
+    }
+    .category-link.active>i {
+        color: #F2E8CF;
+        transition: color 0.1s ease-in-out 0.25s;
+    }
+    .category-link.active:hover {
+        background-color: #A7C957;
+        cursor: default;
+    }
+    .category-link:hover {
+        background-color: #e9ecef;
+        border-radius: 5px;
+        color: #386641;
+    }
+    .sidebar-cart{
+    transition: all 0.3s ease;
+    }
+
+
+
+
+/* Стили модального окна */
+/* Стили для модального окна */
+.modal-content {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.modal-header {
+    background-color: #386641;
+    color: white;
+}
+
+.modal-body img {
+    max-height: 300px;
+    object-fit: cover;
+    width: 100%;
+}

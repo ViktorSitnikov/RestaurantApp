@@ -1,0 +1,26 @@
+<div class="col-auto d-none d-xl-block sidebar mx-4 sidebar-cart">
+            <div class="position-sticky pt-2">
+                <h5 class="px-3" style="color: #386641;">Категории</h5>
+                <ul class="nav flex-column" id="categories-nav">
+                    <li class="nav-item">
+                        <a class="nav-link category-link active" href="#novelty">
+                            <i class="fas fa-star me-2"></i> Новинки
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link category-link" href="#hits">
+                            <i class="fas fa-fire me-2"></i> Хиты продаж
+                        </a>
+                    </li>
+
+                    {% for el in categories %}
+                        <li class="nav-item">
+                        <a class="nav-link category-link" href="#{{ el.name }}">
+                            <i class="{{ el.icon_class }}"></i> {{ el.name }}
+                        </a>
+                    </li>
+                    {% endfor %}
+
+                </ul>
+            </div>
+        </div>

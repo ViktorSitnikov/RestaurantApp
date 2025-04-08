@@ -1,0 +1,17 @@
+{% load static %}
+        <div class="menu-card">
+            <div data-bs-toggle="modal" data-bs-target="#productModal-{{ product.id }}">
+                <div class="menu-img">
+                    <img src="{% static 'menu/img/' %}{{ product.photolink }}.jpg" alt="">
+                </div>
+                <div class="menu-body">
+                    <h5 class="menu-title">{{ product.name }}</h5>
+                        <div class="menu-details">
+                            <span class="menu-weight">{{ product.grams }}г</span>
+                            <span class="menu-price">{{ product.price }}₽</span>
+                        </div>
+
+                </div>
+            </div>
+            <button class="btn btn-success add-btn" onclick="event.stopPropagation()">Добавить</button>
+        </div>

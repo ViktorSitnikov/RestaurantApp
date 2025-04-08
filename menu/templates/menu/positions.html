@@ -1,0 +1,14 @@
+{% load static %}
+
+
+<div class="menu-container">
+    {% for product in category.products.all %}
+
+        {% include 'menu/dish_card.html' %}
+
+        {% empty %}
+
+        <div class="alert alert-info">В этой категории пока нет блюд</div>
+    {% endfor %}
+
+</div>
