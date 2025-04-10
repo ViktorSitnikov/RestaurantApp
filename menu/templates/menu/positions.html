@@ -1,7 +1,7 @@
 {% load static %}
 
 
-<div class="menu-container">
+<div class="menu-container row-cols-6">
     {% for product in category.products.all %}
 
         {% include 'menu/dish_card.html' %}

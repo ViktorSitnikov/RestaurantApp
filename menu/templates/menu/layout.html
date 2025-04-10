@@ -12,9 +12,14 @@
     <script src="https://kit.fontawesome.com/8a7b2ec054.js" crossorigin="anonymous"></script>
     <script src="{% static 'menu/js/sidebar.js' %}"></script>
     <script src="{% static 'menu/js/modal.js' %}"></script>
+    <script src="{% static 'menu/js/sidebar-cart.js' %}"></script>
 
     <link rel="stylesheet" href="{% static 'menu/css/main.css' %}">
     <title>{% block title %}{% endblock %}</title>
+
+    <template id="menuCartElement">
+        {% include 'menu/menu_cart_element.html' %}
+    </template>
 </head>
 <body>
 

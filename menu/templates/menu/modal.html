@@ -2,22 +2,22 @@
 
 <!-- Единое модальное окно -->
 <div class="modal fade" id="productModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered"  style="max-width: min-content;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="productModalLabel"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-6 mb-3">
+                <div class="row" style="flex-wrap: nowrap;">
+                    <div class="col-md-6 mb-3" style="width: 500px;">
                         <img id="modalProductImage" src="" class="img-fluid rounded" alt="">
                         <div style="text-align: left;">
                             <h5 style="text-align: center;" class="py-2 mb-0">Описание</h5>
                             <p id="modalProductDescription"></p>
                         </div>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6" style="width: 300px;">
                         <h4 class="mb-3" id="modalProductPrice"></h4>
                         <p class="text-muted" id="modalProductGrams"></p>
 

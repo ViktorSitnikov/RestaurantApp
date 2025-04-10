@@ -1,26 +1,62 @@
-<div class="col-auto d-none d-xl-block sidebar mx-4 sidebar-cart">
+<div class="col-3 d-none sidebar me-4 sidebar-cart" id="sidebarCart">
             <div class="position-sticky pt-2">
-                <h5 class="px-3" style="color: #386641;">Категории</h5>
-                <ul class="nav flex-column" id="categories-nav">
-                    <li class="nav-item">
-                        <a class="nav-link category-link active" href="#novelty">
-                            <i class="fas fa-star me-2"></i> Новинки
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link category-link" href="#hits">
-                            <i class="fas fa-fire me-2"></i> Хиты продаж
-                        </a>
+                <h5 class="px-3" style="color: #386641;">Корзина</h5>
+                <ul class="flex-column list-group my-2" id="sidebarCartItemsHolder" >
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center my-1">
+                        <div class="sidebar-cart-position-action-buttons">
+                            <i class="fa-solid fa-plus"></i>
+                            <i class="fa-solid fa-minus"></i>
+                            <i class="fa-solid fa-trash"></i>
+                        </div>
+                        <span class="sidebar-cart-position-name">Императорский лососем десерт с нежным сливочным сыром Императорский лососем десерт с нежным сливочным сыром</span>
+                        <span>1430₽ x 5</span>
                     </li>
 
-                    {% for el in categories %}
-                        <li class="nav-item">
-                        <a class="nav-link category-link" href="#{{ el.name }}">
-                            <i class="{{ el.icon_class }}"></i> {{ el.name }}
-                        </a>
+                    <li class="list-group-item d-flex justify-content-between align-items-center my-1">
+                        <div class="sidebar-cart-position-action-buttons">
+                            <i class="fa-solid fa-plus"></i>
+                            <i class="fa-solid fa-minus"></i>
+                            <i class="fa-solid fa-trash"></i>
+                        </div>
+                        <span class="sidebar-cart-position-name">Императорский лососем десерт с нежным сливочным сыром</span>
+                        <span>1430₽</span>
                     </li>
-                    {% endfor %}
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center my-1">
+                        <div class="sidebar-cart-position-action-buttons">
+                            <i class="fa-solid fa-plus"></i>
+                            <i class="fa-solid fa-minus"></i>
+                            <i class="fa-solid fa-trash"></i>
+                        </div>
+                        <span class="sidebar-cart-position-name">Императорский лососем десерт с нежным сливочным сыром</span>
+                        <span>1430₽</span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center my-1">
+                        <div class="sidebar-cart-position-action-buttons">
+                            <i class="fa-solid fa-plus"></i>
+                            <i class="fa-solid fa-minus"></i>
+                            <i class="fa-solid fa-trash"></i>
+                        </div>
+                        <span class="sidebar-cart-position-name">Императорский лососем десерт с нежным сливочным сыром</span>
+                        <span>1430₽</span>
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center my-1">
+                        <div class="sidebar-cart-position-action-buttons">
+                            <i class="fa-solid fa-plus"></i>
+                            <i class="fa-solid fa-minus"></i>
+                            <i class="fa-solid fa-trash"></i>
+                        </div>
+                        <span class="sidebar-cart-position-name">Онигири</span>
+                        <span>1430₽</span>
+                    </li>
 
                 </ul>
+
+                <div>
+                    <button type="button" class="btn btn-success" id="sidebarCart">Перейти к оформлению <span id="sidebarCartTotalCost"></span>₽</button>
+                </div>
             </div>
         </div>
