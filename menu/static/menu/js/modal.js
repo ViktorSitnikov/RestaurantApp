@@ -18,8 +18,27 @@ document.addEventListener('DOMContentLoaded', function() {
             `;
             document.getElementById('modalProductPriceBtn').textContent = product.price;
 
+//          Добавляем аттрибуты к кнопке добавления в корзину в модальном окне
+            document.getElementById('modalAddToCart').setAttribute("data-product-id", productId);
+            document.getElementById('modalAddToCart').setAttribute("data-product-json", `{"name": "` + product.name +`", "price": "` + product.price +`"}`);
+
             const modal = new bootstrap.Modal(document.getElementById('productModal'));
             modal.show();
         })
     })
 })
+
+
+                // data-product-json='{% spaceless %}
+                //  {
+                //     "name": "{{ product.name|escapejs }}",
+                //     "photolink": "{{ product.photolink|escapejs }}",
+                //     "description": "{{ product.description|escapejs }}",
+                //     "price": "{{ product.price }}",
+                //     "grams": "{{ product.grams }}",
+                //     "structure": "{{ product.structure|escapejs }}",
+                //     "kalories": "{{ product.kalories }}",
+                //     "protein": "{{ product.protein }}",
+                //     "fat": "{{ product.fat }}",
+                //     "carbohydrates": "{{ product.carbohydrates }}"
+                //  }{% endspaceless %}' 

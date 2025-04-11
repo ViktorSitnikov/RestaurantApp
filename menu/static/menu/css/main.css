@@ -11,6 +11,15 @@ main.main-frame {
     align-items: center;
     align-content: stretch;
 }
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
 
 
 
@@ -164,7 +173,7 @@ a.menu-icon > i:hover {
 .sidebar.sidebar-cart {
         position: -webkit-sticky;
         position: sticky;
-        top: 25%;
+        top: 20%;
         height: min-content;
         background-color: #F2E8CF;
         overflow-y: auto;
@@ -183,4 +192,15 @@ a.menu-icon > i:hover {
     }
     .sidebar-cart-position-action-buttons{
     flex-shrink: 0; width: max-content; text-align: left;
+    }
+    .sidebar-cart-position-price {
+    flex-shrink: 0;
+    }
+    #sidebarCartItemsHolder{
+    height: 60vh;
+    overflow-y: auto; /* Включаем прокрутку */
+    scrollbar-width: none; /* Firefox */
+    }
+    #sidebarCartItemsHolder::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Edge */
     }
