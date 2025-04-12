@@ -51,7 +51,7 @@ a.menu-icon > i:hover {
             justify-content: center;
         }
         .menu-card {
-            width:185px;
+            width: 22%;
             border-radius: 10px;
             overflow: hidden;
             box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
@@ -200,6 +200,7 @@ a.menu-icon > i:hover {
     height: 60vh;
     overflow-y: auto; /* Включаем прокрутку */
     scrollbar-width: none; /* Firefox */
+    transition: all 0.3s ease;
     }
     #sidebarCartItemsHolder::-webkit-scrollbar {
     display: none; /* Chrome, Safari, Edge */

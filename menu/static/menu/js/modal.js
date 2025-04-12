@@ -27,18 +27,3 @@ document.addEventListener('DOMContentLoaded', function() {
         })
     })
 })
-
-
-                // data-product-json='{% spaceless %}
-                //  {
-                //     "name": "{{ product.name|escapejs }}",
-                //     "photolink": "{{ product.photolink|escapejs }}",
-                //     "description": "{{ product.description|escapejs }}",
-                //     "price": "{{ product.price }}",
-                //     "grams": "{{ product.grams }}",
-                //     "structure": "{{ product.structure|escapejs }}",
-                //     "kalories": "{{ product.kalories }}",
-                //     "protein": "{{ product.protein }}",
-                //     "fat": "{{ product.fat }}",
-                //     "carbohydrates": "{{ product.carbohydrates }}"
-                //  }{% endspaceless %}' 

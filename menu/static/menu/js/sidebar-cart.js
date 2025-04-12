@@ -1,6 +1,5 @@
 // Хранение данных корзины
 let cartItems = []; // Массив объектов {id, product, quantity}
-let totalCost = 0.00;
 
 // DOM элементы
 const sidebarCart = document.getElementById('sidebarCart');
@@ -18,11 +17,10 @@ document.addEventListener('DOMContentLoaded', function() {
             addToCart(productId, product);
         });
     });
+    updateCartUI();
 });
 
 // Добавление товара в корзину
-// когда добавляется новый товар с новым id 
-// то выполняется снова и передает снова все товары из корзины из-за это получается такая сумма
 function addToCart(productId, product) {
 
     // Проверяем, есть ли уже такой товар в корзине
@@ -51,28 +49,33 @@ function removeFromCart(productId, completely = false) {
         if (completely || cartItems[itemIndex].quantity <= 1) {
             // Удаляем товар полностью
             cartItems.splice(itemIndex, 1);
-            updateCartUI(-1);
         } else {
             // Уменьшаем количество
             cartItems[itemIndex].quantity -= 1;
-            updateCartUI(-1);
         }
     }
 
-
+    updateCartUI();
 }
 
 // Обновление интерфейса корзины
-function updateCartUI(totalCostReduce = 1) {
+function updateCartUI() {
+
+
+    let totalCost = 0;
+
     // Очищаем корзину
     document.getElementById('sidebarCartItemsHolder').innerHTML = '';
 
-    totalCost = 0;
-
-
-    
-
-    // Добавляем все товары здесь как понял передаются все снова уникальные товары в корзине и суммируются 
+    if (cartItems.length === 0) {
+        document.getElementById('sidebarCartItemsHolder').innerHTML = `
+            <li class="list-group-item d-flex justify-content-center align-items-center my-1">
+                <span  class="text-muted">Тут пока что пусто :(</span>
+            </li>
+        `;
+    }
+    else {
+    // Добавляем все товары
     cartItems.forEach(item => {
         const template = document.getElementById('menuCartElement');
         const clone = template.content.cloneNode(true);
@@ -83,10 +86,10 @@ function updateCartUI(totalCostReduce = 1) {
 
         // Заполняем данные
         clone.querySelector('.sidebar-cart-position-name').textContent =
-            `${item.product.name}${item.quantity > 1 ? ` ×${item.quantity}` : ''}`;
+            `${item.product.name}`;
 
         clone.querySelector('.sidebar-cart-position-price').textContent =
-            `${positionPrice.toFixed(2)}₽`;
+            `${positionPrice.toFixed(2)}₽ ${item.quantity > 1 ? ` ×${item.quantity}` : ''}`;
 
         // Обработчики для кнопок управления количеством
         clone.querySelector('.btn-increase').addEventListener('click', () => {
@@ -103,6 +106,7 @@ function updateCartUI(totalCostReduce = 1) {
 
         document.getElementById('sidebarCartItemsHolder').appendChild(clone);
     });
+    }
 
     // Обновляем общую стоимость
     document.getElementById('sidebarCartTotalCost').textContent = totalCost.toFixed(2);
