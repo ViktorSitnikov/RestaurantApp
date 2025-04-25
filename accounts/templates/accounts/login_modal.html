@@ -1,0 +1,36 @@
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-danger">{{ message }}</div>
+  {% endfor %}
+{% endif %}
+
+<div class="modal fade" id="loginModal" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Вход в систему</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <form method="POST" action="{% url 'accounts:login' %}">
+        {% csrf_token %}
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Логин</label>
+            <input type="text" name="username" class="form-control" required>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Пароль</label>
+            <input type="password" name="password" class="form-control" required>
+          </div>
+          <div id="loginErrors" class="alert alert-danger d-none"></div>
+        </div>
+        <div class="modal-footer">
+          <button data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#registerModal" aria-expanded="false" type="button" class="btn btn-primary"><i class="fas fa-user-plus me-2"></i>Регистрация</button>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Закрыть</button>
+          <button type="submit" class="btn btn-primary">Войти</button>
+          
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

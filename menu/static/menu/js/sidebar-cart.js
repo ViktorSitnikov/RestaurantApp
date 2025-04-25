@@ -12,9 +12,15 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('[data-bs-toggle="addToCart"]').forEach(button => {
         button.addEventListener('click', function() {
             const productId = this.getAttribute('data-product-id');
-            const product = JSON.parse(this.getAttribute('data-product-json'));
+            // const product = JSON.parse(this.getAttribute('data-product-json'));
 
-            addToCart(productId, product);
+            fetch(`api/products/${productId}/`)
+                .then(response => response.json())
+                .then(product => {
+                    addToCart(productId, product);
+                });
+
+            
         });
     });
     updateCartUI();
@@ -69,8 +75,12 @@ function updateCartUI() {
 
     if (cartItems.length === 0) {
         document.getElementById('sidebarCartItemsHolder').innerHTML = `
-            <li class="list-group-item d-flex justify-content-center align-items-center my-1">
-                <span  class="text-muted">Тут пока что пусто :(</span>
+            <li class="list-group-item d-flex justify-content-center align-items-center my-1 flex-grow-1">
+                <div class="text-center">
+                    <i class="fas fa-shopping-basket fa-2x mb-2" style="color: #6A994E;"></i>
+                    <p class="text-muted mb-1">Ваша корзина пуста</p>
+                    <small class="text-muted">Добавьте что-нибудь вкусненькое!</small>
+                </div>
             </li>
         `;
     }
@@ -89,8 +99,11 @@ function updateCartUI() {
             `${item.product.name}`;
 
         clone.querySelector('.sidebar-cart-position-price').textContent =
-            `${positionPrice.toFixed(2)}₽ ${item.quantity > 1 ? ` ×${item.quantity}` : ''}`;
+            `${positionPrice.toFixed(2)}₽`;
 
+        clone.querySelector('.quantity').textContent =
+            `${item.quantity}`;
+            
         // Обработчики для кнопок управления количеством
         clone.querySelector('.btn-increase').addEventListener('click', () => {
             addToCart(item.id, item.product);

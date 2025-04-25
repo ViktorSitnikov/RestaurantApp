@@ -1,35 +1,46 @@
 {% load static %}
-<header class="p-3 mb-3 border-bottom">
+<header class="p-3 mb-3 border-bottom position-sticky top-0 z-3">
     <div class="container">
-      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-        <a href="{% url 'home' %}" class="d-flex align-items-center mb-2 mb-lg-0 link-body-emphasis text-decoration-none">
-          <img src="{% static 'menu/img/Логотип2.png' %}" width="40" height="32" class="me-2" alt="">
+        <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+            <a href="{% url 'home' %}" class="d-flex align-items-center mb-2 mb-lg-0 text-decoration-none">
+                <img src="{% static 'menu/img/Логотип2.png' %}" width="40" height="32" class="me-2" alt="">
+            </a>
 
-        </a>
+            <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                <li>
+                    <a href="{% url 'home' %}" class="px-2" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Главная">
+                        <i class="fa-solid fa-house menu-icon"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'test-page' %}" class="px-2 " data-bs-toggle="tooltip" data-bs-placement="bottom" title="Настройки">
+                        <i class="fa-solid fa-gear menu-icon"></i>
+                    </a>
+                </li>
+                {% if request.user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'accounts:profile' %}" class="px-2">
+                            <i class="fa-solid fa-user menu-icon"></i>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
 
-        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-          <li><a href="{% url 'home' %}" class="nav-link px-2 link-body-emphasis menu-icon"><i class="fa-solid fa-house"></i></a></li>
-          <li><a href="{% url 'test-page' %}" class="nav-link px-2 link-body-emphasis menu-icon"><i class="fa-solid fa-gear"></i></a></li>
-
-
-        </ul>
-
-        <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-          <input type="search" class="form-control" placeholder="Поиск" aria-label="Search">
-        </form>
-
-        <div class="dropdown text-end">
-          <a href="#" class="d-block link-body-emphasis text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-            <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
-          </a>
-          <ul class="dropdown-menu text-small" style="">
-            <li><a class="dropdown-item" href="#">New project...</a></li>
-            <li><a class="dropdown-item" href="#">Settings</a></li>
-            <li><a class="dropdown-item" href="#">Profile</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Sign out</a></li>
-          </ul>
+            <div class="text-end">
+                {% if request.user.is_authenticated %}
+                    <div class="d-flex align-items-center">
+                        <a href="{% url 'accounts:logout' %}" class="btn btn-outline-light">
+                            <i style="color: #F2E8CF;" class="fa-solid fa-right-from-bracket me-2"></i>Выйти
+                        </a>
+                    </div>
+                {% else %}
+                    <a href="#" class="btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#loginModal">
+                        <i style="color: #F2E8CF;" class="fa-solid fa-right-to-bracket me-2"></i>Войти
+                    </a>
+                {% endif %}
+            </div>
         </div>
-      </div>
     </div>
-  </header>
+</header>
+
+

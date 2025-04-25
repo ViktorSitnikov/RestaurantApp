@@ -13,12 +13,16 @@
     <script src="{% static 'menu/js/sidebar.js' %}"></script>
     <script src="{% static 'menu/js/modal.js' %}"></script>
     <script src="{% static 'menu/js/sidebar-cart.js' %}"></script>
+    <script>
+        const REGISTER_URL = "{% url 'accounts:register' %}";
+    </script>
+    <script src="{% static 'menu/js/registration.js' %}"></script>
 
     <link rel="stylesheet" href="{% static 'menu/css/main.css' %}">
     <title>{% block title %}{% endblock %}</title>
 
     <template id="menuCartElement">
-        {% include 'menu/menu_cart_element.html' %}
+        {% include 'cart/menu_cart_element.html' %}
     </template>
 </head>
 <body>
@@ -30,5 +34,9 @@
 
     {% include 'menu/footer.html' %}
 
+    {% include 'accounts/login_modal.html' %}
+    {% include 'accounts/registration_modal.html' %}
+
 </body>
 </html>
+

@@ -1,25 +1,34 @@
+from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-class Role(models.Model):
-    role_name = models.CharField(max_length=100, verbose_name="Название роли")
+
+class CustomUser(AbstractUser):
+    phone = models.CharField(max_length=20, blank=True)
+    avatar = models.ImageField(upload_to='avatars/', blank=True)
+
+    # Добавляем уникальные related_name
+    groups = models.ManyToManyField(
+        'auth.Group',
+        verbose_name='groups',
+        blank=True,
+        help_text='The groups this user belongs to. A user will get all permissions granted to each of their groups.',
+        related_name="customuser_set",  # Уникальное имя
+        related_query_name="user",
+    )
+    user_permissions = models.ManyToManyField(
+        'auth.Permission',
+        verbose_name='user permissions',
+        blank=True,
+        help_text='Specific permissions for this user.',
+        related_name="customuser_set",  # Уникальное имя
+        related_query_name="user",
+    )
 
     def __str__(self):
-        return self.name
+        return self.username
 
-    def get_absolute_url(self):
-        return f'/Role/{self.id}'
-
-class Users(models.Model):
-    name = models.CharField(max_length=100, verbose_name="Имя")
-    surname = models.CharField(max_length=100, verbose_name="Фамилия")
-    patronymic = models.CharField(max_length=100, verbose_name="Отчество")
-    email = models.EmailField(max_length=255, verbose_name="Почта")
-    phone_number = models.CharField(max_length=11, verbose_name="Телефон")
-    role = models.ForeignKey(Role, on_delete=models.CASCADE, verbose_name="Роль", related_name="users")
-    photo = models.ImageField(upload_to='cars')
-
-    def __str__(self):
-        return self.name
-
-
-
+    def save(self, *args, **kwargs):
+        # Принудительно устанавливаем is_active=True для новых пользователей
+        if not self.pk:  # Если это новый пользователь
+            self.is_active = True
+        super().save(*args, **kwargs)

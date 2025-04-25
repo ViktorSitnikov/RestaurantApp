@@ -12,9 +12,9 @@ class Command(BaseCommand):
         fake = Faker('ru_RU')
 
         # # Создаем категории если их нет
-        # categories = ['Горячее', 'Роллы', 'Супы', 'Салаты', 'Десерты', 'Напитки']
-        # for cat in categories:
-        #     Category.objects.get_or_create(name=cat)
+        categories = ['Горячее', 'Роллы', 'Супы', 'Салаты', 'Десерты', 'Напитки']
+        for cat in categories:
+            Category.objects.get_or_create(name=cat)
 
         # Списки для генерации правдоподобных названий
         dish_types = ['ролл', 'суши', 'салат', 'суп', 'десерт', 'напиток']

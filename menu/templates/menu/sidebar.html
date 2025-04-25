@@ -1,26 +1,31 @@
-<div id="categoriesSidebar" class="col-2 d-none d-xl-block sidebar ms-4">
-            <div class="position-sticky pt-2">
-                <h5 class="px-3" style="color: #386641;">Категории</h5>
-                <ul class="nav flex-column" id="categories-nav">
-                    <li class="nav-item">
-                        <a class="nav-link category-link active" href="#novelty">
-                            <i class="fas fa-star me-2"></i> Новинки
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link category-link" href="#hits">
-                            <i class="fas fa-fire me-2"></i> Хиты продаж
-                        </a>
-                    </li>
-
-                    {% for el in categories %}
-                        <li class="nav-item">
-                        <a class="nav-link category-link" href="#{{ el.name }}">
-                            <i class="{{ el.icon_class }}"></i> {{ el.name }}
-                        </a>
-                    </li>
-                    {% endfor %}
-
-                </ul>
-            </div>
+<div id="categoriesSidebar" class="col-2 d-none d-xl-block sidebar ms-auto">
+    <div class="position-sticky pt-2">
+        <div class="sidebar-header">
+            <h5 class="px-3">
+                <i class="fa-solid fa-list me-2"></i>Категории
+            </h5>
         </div>
+        <ul class="nav flex-column" id="categories-nav">
+            <li class="nav-item">
+                <a class="nav-link category-link active" href="#novelty">
+                    <i class="fas fa-star me-2"></i>Новинки
+                    <span class="badge bg-primary">New</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link category-link" href="#hits">
+                    <i class="fas fa-fire me-2"></i>Хиты продаж
+                    <span class="badge bg-danger">Hot</span>
+                </a>
+            </li>
+
+            {% for el in categories %}
+            <li class="nav-item">
+                <a class="nav-link category-link" href="#{{ el.name }}">
+                    <i class="{{ el.icon_class }} me-2"></i>{{ el.name }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

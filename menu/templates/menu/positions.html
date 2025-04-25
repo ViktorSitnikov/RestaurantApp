@@ -1,14 +1,23 @@
 {% load static %}
 
-
-<div class="menu-container row-cols-6">
-    {% for product in category.products.all %}
-
-        {% include 'menu/dish_card.html' %}
-
+<section id="{{ category.name }}" class="category-section mb-5">
+    <div class="section-header py-4">
+        <h2 class="section-title">
+            <i class="{{ category.icon_class }} me-3"></i>{{ category.name }}
+        </h2>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-3 row-cols-xxxl-4 row-cols-xxxxl-5 g-4">
+        {% for product in category.products.all %}
+            <div class="col">
+                {% include 'menu/dish_card.html' %}
+            </div>
         {% empty %}
-
-        <div class="alert alert-info">В этой категории пока нет блюд</div>
-    {% endfor %}
-
-</div>
+            <div class="col-12">
+                <div class="alert alert-info d-flex align-items-center">
+                    <i class="fa-solid fa-info-circle me-2"></i>
+                    <span>В этой категории пока нет блюд</span>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</section>

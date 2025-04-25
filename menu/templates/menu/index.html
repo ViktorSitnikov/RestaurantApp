@@ -6,51 +6,86 @@
 {% block content %}
 <div class="container-fluid">
     <div class="row">
-
+        
         <!-- Sidebar с категориями -->
         {% include 'menu/sidebar.html' %}
 
-        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-            <!-- Раздел новинок -->
-            <section id="novelty" class="category-section py-5">
-                <h2 class="mb-4"><i class="fas fa-star me-2"></i>Новинки</h2>
-                <div class="menu-container">
-                    {% for product in novelty_products %}
-            {% include 'menu/dish_card.html' %}
-        {% empty %}
-            <div class="alert alert-info">Новинок пока нет</div>
-        {% endfor %}
-                </div>
+        <main class="col-md-9 col-lg-6 mx-3">
 
+        
+            <!-- Hero секция -->
+            <div class="hero-section mb-5">
+                <div class="hero-content text-center">
+                {% if request.user.is_authenticated %}
+                <h1 class="hero-title">С возвращением, {{ request.user.username }}!</h1>
+                <p class="hero-subtitle">Что бы вы хотели заказать сегодня?</p>
+                {% else %}
+                    <h1 class="hero-title">Добро пожаловать в наш ресторан</h1>
+                    <p class="hero-subtitle">Попробуйте наши лучшие блюда</p>
+                {% endif %}
+                </div>
+            </div>
+
+            <!-- Раздел новинок -->
+            <section id="novelty" class="category-section mb-5">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-star me-3"></i>Новинки
+                        <span class="badge bg-primary ms-3">New</span>
+                    </h2>
+                </div>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-3 row-cols-xxxl-4 row-cols-xxxxl-5 g-4">
+                    {% for product in novelty_products %}
+                        <div class="col">
+                            {% include 'menu/dish_card.html' %}
+                        </div>
+                    {% empty %}
+                        <div class="col-12">
+                            <div class="alert alert-info d-flex align-items-center">
+                                <i class="fa-solid fa-info-circle me-2"></i>
+                                <span>Новинок пока нет</span>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </section>
 
             <!-- Раздел хитов -->
-            <section id="hits" class="category-section py-5">
-                <h2 class="mb-4"><i class="fas fa-fire me-2"></i>Хиты продаж</h2>
-                <div class="menu-container">
+            <section id="hits" class="category-section mb-5">
+                <div class="section-header">
+                    <h2 class="section-title">
+                        <i class="fas fa-fire me-3"></i>Хиты продаж
+                        <span class="badge bg-danger ms-3">Hot</span>
+                    </h2>
+                </div>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-3 row-cols-xxxl-4 row-cols-xxxxl-5 g-4">
                     {% for product in hit_products %}
-            {% include 'menu/dish_card.html' %}
-        {% empty %}
-            <div class="alert alert-info">Новинок пока нет</div>
-        {% endfor %}
+                        <div class="col">
+                            {% include 'menu/dish_card.html' %}
+                        </div>
+                    {% empty %}
+                        <div class="col-12">
+                            <div class="alert alert-info d-flex align-items-center">
+                                <i class="fa-solid fa-info-circle me-2"></i>
+                                <span>Хитов пока нет</span>
+                            </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </section>
 
-        {% for category in categories %}
+            <!-- Категории -->
+            {% for category in categories %}
+                    {% include 'menu/positions.html' %}
+            {% endfor %}
 
-            <section id="{{ category.name }}" class="category-section py-5">
-                <h2 class="mb-4"><i class="{{ category.icon_class }}"></i> {{ category.name }}</h2>
-                {% include 'menu/positions.html' %}
-            </section>
+            {% include 'menu/modal.html' %}
 
-        {% endfor %}
+            
+        </main>
 
-        {% include 'menu/modal.html' %}
+        {% include 'cart/cart_sidebar.html' %}
     </div>
-
-    {% if category.products.all %}
-    <p>Количество блюд в категории {{ category.name }}: {{ category.products.all.count }}</p>
-{% endif %}
-
 </div>
+
 {% endblock %}

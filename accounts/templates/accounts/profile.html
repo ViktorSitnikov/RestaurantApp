@@ -1,0 +1,60 @@
+﻿{% extends 'menu/layout.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="sidebar">
+                <div class="sidebar-header">
+                    <h5>Профиль пользователя</h5>
+                </div>
+                <div class="nav flex-column">
+                    <a href="#" class="nav-link active">
+                        <i class="fa-solid fa-user"></i>
+                        <span>Основная информация</span>
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <span>История заказов</span>
+                    </a>
+                    <a href="#" class="nav-link">
+                        <i class="fa-solid fa-gear"></i>
+                        <span>Настройки</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-8">
+            <div class="bg-white p-4 rounded-3 shadow-sm">
+                <h4 class="mb-4" style="color: #386641;">Редактировать профиль</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="username" class="form-label" style="color: #6A994E;">Имя пользователя</label>
+                        <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label" style="color: #6A994E;">Email</label>
+                        <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="first_name" class="form-label" style="color: #6A994E;">Имя</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="last_name" class="form-label" style="color: #6A994E;">Фамилия</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="phone" class="form-label" style="color: #6A994E;">Телефон</label>
+                        <input type="tel" class="form-control" id="phone" name="phone" value="{{ user.profile.phone }}">
+                    </div>
+                    <button type="submit" class="btn btn-success">Сохранить изменения</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

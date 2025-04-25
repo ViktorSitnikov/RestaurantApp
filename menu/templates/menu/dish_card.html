@@ -1,46 +1,31 @@
 {% load static %}
 
-        <div class="menu-card">
-                <div data-bs-toggle="modal-product"
-        data-product-id="{{ product.id }}"
-        data-product-json='{% spaceless %}
-         {
-            "name": "{{ product.name|escapejs }}",
-            "photolink": "{{ product.photolink|escapejs }}",
-            "description": "{{ product.description|escapejs }}",
-            "price": "{{ product.price }}",
-            "grams": "{{ product.grams }}",
-            "structure": "{{ product.structure|escapejs }}",
-            "kalories": "{{ product.kalories }}",
-            "protein": "{{ product.protein }}",
-            "fat": "{{ product.fat }}",
-            "carbohydrates": "{{ product.carbohydrates }}"
-         }{% endspaceless %}'>
-                <div class="menu-img">
-                    <img src="{% static 'menu/img/' %}{{ product.photolink }}.jpg" alt="">
-                </div>
-                <div class="menu-body">
-                    <h5 class="menu-title">{{ product.name }}</h5>
-                        <div class="menu-details">
-                            <span class="menu-weight">{{ product.grams }}г</span>
-                            <span class="menu-price">{{ product.price }}₽</span>
-                        </div>
-
-                </div>
+<div class="menu-card">
+    <div class="card-content" 
+         data-bs-toggle="modal-product"
+         data-product-id="{{ product.id }}">
+        <div class="menu-img">
+            <img src="{% static 'menu/img/' %}{{ product.photolink }}.jpg" alt="{{ product.name }}">
+            <div class="img-overlay">
+                <i class="fa-solid fa-magnifying-glass-plus"></i>
             </div>
-            <button class="btn btn-success add-btn" data-bs-toggle="addToCart"
-        data-product-id="{{ product.id }}"
-        data-product-json='{% spaceless %}
-         {
-            "name": "{{ product.name|escapejs }}",
-            "photolink": "{{ product.photolink|escapejs }}",
-            "description": "{{ product.description|escapejs }}",
-            "price": "{{ product.price }}",
-            "grams": "{{ product.grams }}",
-            "structure": "{{ product.structure|escapejs }}",
-            "kalories": "{{ product.kalories }}",
-            "protein": "{{ product.protein }}",
-            "fat": "{{ product.fat }}",
-            "carbohydrates": "{{ product.carbohydrates }}"
-         }{% endspaceless %}'>Добавить</button>
         </div>
+        <div class="menu-body">
+            <h5 class="menu-title">{{ product.name }}</h5>
+            <div class="menu-details">
+                <span class="menu-weight">
+                    <i class="fa-solid fa-weight-hanging me-1"></i>{{ product.grams }}г
+                </span>
+                <span class="menu-price">
+                    <i class="fa-solid fa-ruble-sign me-1"></i>{{ product.price }}
+                </span>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-add" 
+            data-bs-toggle="addToCart"
+            data-product-id="{{ product.id }}">
+        <i class="fa-solid fa-cart-plus me-2"></i>Добавить
+    </button>
+</div>
+
