@@ -1,0 +1,34 @@
+{% load static %}
+
+<div class="menu-card col-lg-12 m-3">
+    <div class="card-content d-flex">
+        <div class="menu-img col-lg-5 order-cart-position-img-container" data-bs-toggle="modal-product">
+            <img class="order-cart-position-img" src="" alt="">
+            <div class="img-overlay">
+                <i class="fa-solid fa-magnifying-glass-plus"></i>
+            </div>
+        </div>
+        <div class="menu-body flex-grow-1 col-lg-5 mx-4">
+            <h5 class="menu-title order-cart-position-name"></h5>
+            <div class="menu-details">
+                <div>
+                    <i class="fa-solid fa-weight-hanging me-1"></i>
+                    <span class="menu-weight order-cart-position-grams">
+                    </span>
+                    <span class="menu-weight">гр</span>
+                </div>
+                <div>
+                    <span class="menu-price order-cart-position-price">
+                    </span>
+                    <i class="fa-solid fa-ruble-sign me-1"></i>
+                </div>
+            </div>
+            <div class="menu-quantity p-3 noselect d-flex justify-content-center">
+                <i class="fa-solid fa-minus btn-decrease fs-3" style="cursor: pointer; padding: 5px;"></i>
+                <span class="quantity mx-2 fs-3"></span>
+                <i class="fa-solid fa-plus btn-increase fs-3" style="cursor: pointer; padding: 5px;"></i>
+                <i class="fa-solid fa-trash btn-remove fs-3 text-danger" style="cursor: pointer;  padding: 5px;"></i>
+            </div>
+        </div>
+    </div>
+</div>

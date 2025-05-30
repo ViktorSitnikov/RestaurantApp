@@ -1,0 +1,100 @@
+﻿{% extends 'menu/layout.html' %}
+{% load static %}
+
+
+{% block title %}Подтверждение заказа{% endblock %}
+
+{% block content %}
+<div class="container-fluid mt-5">
+    <div class="row justify-content-center">
+        <!-- Столбец с информацией о заказе -->
+            <h1 class="fw-bold mb-3 text-center mb-4">Подтверждение заказа</h1>
+
+
+            <!-- Добавляем цикл для отображения элементов -->
+            <div class="col-lg-5 text-center d-flex flex-column justify-content-center align-items-center" id="order-items-holder">
+            </div>
+
+
+            <!-- Форма для ввода данных -->
+            <div class="col-lg-5">
+                <div class="card sidebar m-3">
+                    <div class="card-body">
+                        <h5 class="card-title mb-4">Информация о заказе</h5> 
+                            <!-- Форма подтверждения заказа -->
+                                
+                            <form id="order-form" method="POST">
+                                {% csrf_token %}
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Кто заберёт?</label>
+                                    <input type="text" name="first_name" class="form-control" required
+                                           value="{{ request.user.first_name|default:'' }}">
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Комментарий</label>
+                                    <textarea name="comment" class="form-control"></textarea>
+                                </div>
+
+                                <div class="d-flex justify-content-between mt-4">
+                                    <h5>Итоговая сумма:</h5>
+                                    <h5 id="cart-total-cost">{{ total_price }} ₽</h5>
+                                </div>
+                                
+                                <button type="submit" class="btn btn-success">Подтвердить заказ</button>
+                            </form>
+
+                            <script>
+                                function getCookie(name) {
+                                    let cookieValue = null;
+                                    if (document.cookie && document.cookie !== '') {
+                                        const cookies = document.cookie.split(';');
+                                        for (let i = 0; i < cookies.length; i++) {
+                                            const cookie = cookies[i].trim();
+                                            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                                                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    return cookieValue;
+                                }
+                            
+                                document.getElementById('order-form').addEventListener('submit', function(e) {
+                                    e.preventDefault();
+                            
+                                    const formData = {
+                                        first_name: document.querySelector('input[name="first_name"]').value,
+                                        comment: document.querySelector('textarea[name="comment"]').value
+                                    };
+                            
+                                    fetch("{% url 'orders:confirm-order' %}", {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'X-CSRFToken': getCookie('csrftoken')
+                                        },
+                                        body: JSON.stringify(formData)
+                                    })
+                                    .then(response => response.json())
+                                    .then(data => {
+                                        if (data.order_id) {
+                                            window.location.href = '/';
+                                        } else {
+                                            alert('Ошибка: ' + JSON.stringify(data));
+                                        }
+                                    });
+                                });
+                            </script>
+                            
+                            
+
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+{% include 'orders/confirm-order.html' %}
+{% endblock %}

@@ -15,8 +15,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         <form method="POST" action="${REGISTER_URL}" id="registerForm" class="p-3">
                             <input type="hidden" name="csrfmiddlewaretoken" value="${data.csrf_token}">
                             <div class="form-group mb-2">
-                                <label for="id_username" class="form-label text-success">Имя пользователя</label>
-                                <input type="text" name="username" id="id_username" class="form-control" placeholder="Имя пользователя" required>
+                                <label for="id_username" class="form-label text-success">Логин</label>
+                                <input type="text" name="username" id="id_username" class="form-control" placeholder="Логин" required>
+                            </div>
+                            <div class="form-group mb-2">
+                                <label for="id_first_name" class="form-label text-success">Как вас зовут?</label>
+                                <input type="text" name="first_name" id="id_first_name" class="form-control" placeholder="Имя" required>
                             </div>
                             <div class="form-group mb-2">
                                 <label for="id_email" class="form-label text-success">Email</label>
@@ -31,7 +35,6 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <input type="password" name="password2" id="id_password2" class="form-control" required>
                             </div>
                             <div id="loginErrors" class="alert alert-danger d-none"></div>
-                            <button type="submit" class="btn btn-success w-100">Зарегистрироваться</button>
                         </form>
                     `;
                     

@@ -1,0 +1,88 @@
+﻿{% load static %}
+
+<div class="modal fade" id="confirmOrderModal" tabindex="-1" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header modal-header-bg border-0 position-relative">
+                <h5 class="modal-title" id="modalTitleId">
+                    Подтверждение заказа
+                </h5>
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="modal"
+                    aria-label="Close"
+                ></button>
+            </div>
+            <!-- Форма подтверждения заказа -->
+            <form action="/order/confirm/" method="POST">
+                {% csrf_token %}
+            <div class="modal-body">
+                        <h5 class="fw-bold mb-3 text-center mb-4">Укажите информацию о заказе</h5>
+                        
+                        {% if user.is_authenticated %}
+                            
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="name" class="form-label">Кто заберёт?</label>
+                                            {{ profile_form.first_name }}
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="last_name" class="form-label">Фамилия</label>
+                                            {{ profile_form.last_name }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="address" class="form-label">Комментарий к заказу</label>
+                                    {{ order_form.comment }}
+                                </div>
+
+                                <!-- Итоговая сумма -->
+                                <div  class="d-flex justify-content-between mt-4">
+                                    <h5>Итоговая сумма:</h5>
+                                    <h5 id="cart-total-cost">{{ total_price }} ₽</h5>
+                                </div>
+                        {% else %}
+                                <div class="mb-3">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <label for="name" class="form-label">Имя</label>
+                                            {{ profile_form.first_name }}
+                                        </div>
+                                        <div class="col-6">
+                                            <label for="name" class="form-label">Фамилия</label>
+                                            {{ profile_form.last_name }}
+                                        </div>
+                                    </div>
+                                </div>
+                                {% comment %} <div class="mb-3">
+                                    <label for="comment" class="form-label">Комментарий к заказу</label>
+                                    {{ order_form.comment }}
+                                </div> {% endcomment %}
+
+                                <!-- Итоговая сумма -->
+                                <div  class="d-flex justify-content-between mt-4">
+                                    <h5>Итоговая сумма:</h5>
+                                    <h5 id="cart-total-cost">{{ total_price }} ₽</h5>
+                                </div>
+
+                                
+                            
+                        {% endif %}
+                    
+            </div>
+            <div class="modal-footer">
+                <div class="d-flex justify-content-between">
+                    <button type="reset" class="btn btn-outline-danger">отменить</button>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-success">Продолжить оформление</button>
+                </div>
+            </div>
+            </form>
+
+        </div>
+    </div>
+</div>

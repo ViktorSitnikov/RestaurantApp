@@ -3,8 +3,8 @@ from django.shortcuts import redirect, render
 from django.contrib import messages
 from django.http import JsonResponse
 import logging
-from .forms import RegisterForm
-
+from .forms import RegisterForm, ProfileForm
+from cart.models import Cart, CartItem
 from .models import CustomUser
 
 logger = logging.getLogger(__name__)
@@ -51,14 +51,48 @@ def login_view(request):
 
         if user is not None:
             auth_login(request, user)
-            logger.info(f"User {username} logged in")
-            return redirect('home')
-        else:
-            logger.warning(f"Failed login attempt for {username}")
-            messages.error(request, "Неверные учетные данные")
 
-    return redirect('home')
+            # Перенос корзины, если пользователь не админ
+            if not user.is_staff:
+                session_key = request.session.session_key
+                if not session_key:
+                    request.session.create()
+                    session_key = request.session.session_key
+
+                session_cart = Cart.objects.filter(session_key=session_key, user__isnull=True).first()
+
+                if session_cart:
+                    existing_cart = Cart.objects.filter(user=user).first()
+
+                    if existing_cart:
+                        # Объединяем корзины
+                        for item in session_cart.cartitem_set.all():
+                            main_item, created = CartItem.objects.get_or_create(cart=existing_cart, dishes=item.dishes)
+                            main_item.quantity += item.quantity
+                            main_item.save()
+                        session_cart.delete()
+                    else:
+                        # Просто привязываем корзину к пользователю
+                        session_cart.user = user
+                        session_cart.save()
+
+                return redirect('home')
+
+            else:
+                return redirect('/admin')  # Если админ
+
+    return redirect('home')  # Если не прошла аутентификация
+
+
 
 def profile(request):
-    return render(request, 'accounts/profile.html')
+    if request.method == 'POST':
+        form = ProfileForm(request.POST, request.FILES, instance=request.user)  # Обрабатываем файлы (например, аватар)
+        if form.is_valid():
+            form.save()  # Сохраняем данные формы
+            return redirect('accounts:profile')  # Перенаправляем на страницу профиля после сохранения
+    else:
+        form = ProfileForm(instance=request.user)  # Загружаем текущие данные пользователя
+
+    return render(request, 'accounts/profile.html', {'form': form})
 

@@ -14,17 +14,68 @@
 
         
             <!-- Hero секция -->
-            <div class="hero-section mb-5">
-                <div class="hero-content text-center">
-                {% if request.user.is_authenticated %}
-                <h1 class="hero-title">С возвращением, {{ request.user.username }}!</h1>
-                <p class="hero-subtitle">Что бы вы хотели заказать сегодня?</p>
+<div class="hero-section mb-5">
+    <div class="hero-content text-center">
+    
+    
+<!-- Hero секция с слайдером -->
+<div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-inner">
+        <!-- Слайд для авторизованных пользователей -->
+        {% if request.user.is_authenticated %}
+        <div class="carousel-item active">
+            <div class="hero-content text-center">
+                {% if active_order %}
+                    <h1 class="hero-title">Ваш заказ принят!</h1>
+                    <p class="hero-subtitle">Номер заказа: #{{ active_order.id }}</p>
+                    <p class="hero-subtitle">Комментарий: {{ active_order.comment|default:"Без комментария" }}</p>
+                {% elif request.user.first_name %}
+                    <h1 class="hero-title">С возвращением, {{ request.user.first_name }}!</h1>
+                    <p class="hero-subtitle">Что бы вы хотели заказать сегодня?</p>
                 {% else %}
-                    <h1 class="hero-title">Добро пожаловать в наш ресторан</h1>
-                    <p class="hero-subtitle">Попробуйте наши лучшие блюда</p>
+                    <h1 class="hero-title">С возвращением, {{ request.user.username }}!</h1>
+                    <p class="hero-subtitle">Что бы вы хотели заказать сегодня?</p>
                 {% endif %}
-                </div>
             </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="hero-content text-center">
+                <h1 class="hero-title">Добро пожаловать в наш ресторан</h1>
+                <p class="hero-subtitle">Попробуйте наши лучшие блюда</p>
+            </div>
+        </div>
+        <!-- Слайд для неавторизованных пользователей -->
+        {% else %}
+        <div class="carousel-item active">
+            <div class="hero-content text-center">
+                <h1 class="hero-title">Добро пожаловать в наш ресторан</h1>
+                <p class="hero-subtitle">Попробуйте наши лучшие блюда</p>
+            </div>
+        </div>
+
+        <div class="carousel-item">
+            <div class="hero-content text-center noselect">
+                <h1 class="hero-title cursor-pointer" data-bs-toggle="modal" data-bs-target="#loginModal">Войти</h1>
+                <p class="hero-subtitle">Для доступа к дополнительным функциям</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <!-- Кнопки управления слайдером -->
+    <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Предыдущий</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Следующий</span>
+    </button>
+</div>
+
+</div>
+</div>
 
             <!-- Раздел новинок -->
             <section id="novelty" class="category-section mb-5">
@@ -78,8 +129,6 @@
             {% for category in categories %}
                     {% include 'menu/positions.html' %}
             {% endfor %}
-
-            {% include 'menu/modal.html' %}
 
             
         </main>

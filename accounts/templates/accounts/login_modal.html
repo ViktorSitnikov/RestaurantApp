@@ -7,7 +7,7 @@
 <div class="modal fade" id="loginModal" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
-      <div class="modal-header">
+      <div class="modal-header modal-header-bg border-0 position-relative">
         <h5 class="modal-title">Вход в систему</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
@@ -15,11 +15,11 @@
         {% csrf_token %}
         <div class="modal-body">
           <div class="mb-3">
-            <label class="form-label">Логин</label>
+            <label class="form-label text-success">Логин</label>
             <input type="text" name="username" class="form-control" required>
           </div>
           <div class="mb-3">
-            <label class="form-label">Пароль</label>
+            <label class="form-label text-success">Пароль</label>
             <input type="password" name="password" class="form-control" required>
           </div>
           <div id="loginErrors" class="alert alert-danger d-none"></div>

@@ -9,7 +9,10 @@
         </ul>
 
         <div>
-            <button type="button" class="btn btn-success" id="sidebarCart">Перейти к оформлению <span id="sidebarCartTotalCost">0.00</span>₽</button>
+            
+            <a type="button" href="{% url 'cart:cart-page' %}" class="btn btn-success" id="sidebarCartAddOrder">Перейти к оформлению <span id="sidebarCartTotalCost">0.00</span></a>
         </div>
     </div>
 </div>
+
+

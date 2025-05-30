@@ -79,6 +79,11 @@ header {
     color: #F2E8CF !important;
 }
 
+#cart-badge{
+    transition: all 0.3s ease;
+    margin-right: -10px;
+}
+
 /* Стили для блюд в меню */
 .menu-container {
     padding: 20px;
@@ -94,7 +99,7 @@ header {
 .menu-card {
     background: #fff;
     border-radius: 15px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.1);
     transition: all 0.3s ease;
     overflow: hidden;
     margin-bottom: 20px;
@@ -369,7 +374,7 @@ header {
 }
 
 .modal-header {
-    padding: 2rem;
+    padding: 1.5rem;
     position: relative;
     z-index: 1;
 }
@@ -380,8 +385,8 @@ header {
     left: 0;
     right: 0;
     bottom: 0;
-    background: linear-gradient(135deg, rgba(56, 102, 65, 0.15) 0%, rgba(106, 153, 78, 0.08) 100%);
-    opacity: 0.7;
+    background: linear-gradient(135deg, #386641 0%, #6A994E 100%);
+    opacity: 1;
 }
 
 .product-image-container {
@@ -498,6 +503,10 @@ header {
     border-radius: 15px;
     text-align: center;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.modal-title {
+    color: #F2E8CF;
 }
 
 .modal-body {

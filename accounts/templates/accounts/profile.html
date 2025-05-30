@@ -29,32 +29,110 @@
         <div class="col-md-8">
             <div class="bg-white p-4 rounded-3 shadow-sm">
                 <h4 class="mb-4" style="color: #386641;">Редактировать профиль</h4>
-                <form method="post">
+                <form method="post" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="username" class="form-label" style="color: #6A994E;">Имя пользователя</label>
-                        <input type="text" class="form-control" id="username" name="username" value="{{ user.username }}">
+                    <div class="row align-items-center">
+                        <!-- Поле для аватара -->
+                        <div class="mb-3 col-6">
+                            
+                            <!-- Контейнер для предпросмотра аватара -->
+                            <div class="avatar-preview-container" style="cursor: pointer;">
+                                <!-- Скрытое поле для загрузки файла -->
+                                <input type="file" id="avatar" name="avatar" class="form-control d-none" accept="image/*" onchange="previewImage(event)">
+                                
+                                <!-- Блок предпросмотра аватара -->
+                                <div class="d-flex flex-column align-items-center">
+                                    {% if user.avatar %}
+                                        <div class="menu-img rounded-circle" style="width: 350px; height: 350px; object-fit: cover;">
+                                            <img id="avatarPreview" src="{{ user.avatar.url }}" alt="Аватар" 
+                                                class="rounded-circle" style="width: 350px; height: 350px; object-fit: cover;">
+                                            <div class="img-overlay">
+                                                <i class="fa-solid fa-magnifying-glass-plus"></i>
+                                            </div>
+                                        </div>
+                                    {% else %}
+                                        <div id="avatarPreview" class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-2" 
+                                            style="width: 350px; height: 350px;">
+                                            <i class="fa-solid fa-user fa-3x text-secondary"></i>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row col-6 mb-3">
+                            <div class="mb-3">
+                                <label for="username" class="form-label" style="color: #6A994E;">Имя пользователя</label>
+                                {{ form.username }}
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label" style="color: #6A994E;">Email</label>
+                                {{ form.email }}
+                            </div>
+                            <div class="mb-3">
+                                <label for="first_name" class="form-label" style="color: #6A994E;">Имя</label>
+                                {{ form.first_name }}
+                            </div>
+                            <div class="mb-3">
+                                <label for="last_name" class="form-label" style="color: #6A994E;">Фамилия</label>
+                                {{ form.last_name }}
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone" class="form-label" style="color: #6A994E;">Телефон</label>
+                                {{ form.phone }}
+                            </div>
+                        </div>
+
                     </div>
-                    <div class="mb-3">
-                        <label for="email" class="form-label" style="color: #6A994E;">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" value="{{ user.email }}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="first_name" class="form-label" style="color: #6A994E;">Имя</label>
-                        <input type="text" class="form-control" id="first_name" name="first_name" value="{{ user.first_name }}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="last_name" class="form-label" style="color: #6A994E;">Фамилия</label>
-                        <input type="text" class="form-control" id="last_name" name="last_name" value="{{ user.last_name }}">
-                    </div>
-                    <div class="mb-3">
-                        <label for="phone" class="form-label" style="color: #6A994E;">Телефон</label>
-                        <input type="tel" class="form-control" id="phone" name="phone" value="{{ user.profile.phone }}">
-                    </div>
+
                     <button type="submit" class="btn btn-success">Сохранить изменения</button>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    // Функция для предпросмотра изображения
+    function previewImage(event) {
+        var file = event.target.files[0];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            var preview = document.getElementById('avatarPreview');
+            
+            // Если это div с иконкой, заменяем его на img
+            if (preview.tagName === 'DIV') {
+                var img = document.createElement('img');
+                img.id = 'avatarPreview';
+                img.className = 'rounded-circle mb-2';
+                img.style.width = '350px';
+                img.style.height = '350px';
+                img.style.objectFit = 'cover';
+                img.alt = 'Аватар';
+                img.src = e.target.result;
+                
+                preview.parentNode.replaceChild(img, preview);
+                preview = img;
+            } else {
+                preview.src = e.target.result;
+            }
+        };
+        
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+    }
+
+    // Обработчик клика по контейнеру аватара для выбора файла
+    document.addEventListener("DOMContentLoaded", function() {
+        var avatarContainer = document.querySelector('.avatar-preview-container');
+        if (avatarContainer) {
+            avatarContainer.addEventListener('click', function() {
+                document.getElementById('avatar').click();
+            });
+        }
+    });
+</script>
 {% endblock %}

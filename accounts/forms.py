@@ -14,32 +14,12 @@ class BootstrapStyledForm:
 class LoginForm(BootstrapStyledForm, AuthenticationForm):
     pass
 
-# class RegisterForm(UserCreationForm):
-#     email = forms.EmailField(required=True)
-#
-#     class Meta:
-#         model = User
-#         fields = ['username', 'email', 'password1', 'password2']
-#
-#     def clean_email(self):
-#         email = self.cleaned_data.get('email')
-#         if User.objects.filter(email=email).exists():
-#             raise ValidationError("Этот email уже используется")
-#         return email
-#
-#     def save(self, commit=True):
-#         user = super().save(commit=False)
-#         user.email = self.cleaned_data['email']
-#         if commit:
-#             user.save()
-#         return user
-
 class RegisterForm(UserCreationForm, BootstrapStyledForm):
     email = forms.EmailField(required=True, label='Email')
 
     class Meta:
         model = User
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'password1', 'password2', 'first_name', 'last_name']
 
     def clean_email(self):
         email = self.cleaned_data.get('email')
@@ -59,3 +39,10 @@ class RegisterForm(UserCreationForm, BootstrapStyledForm):
         if commit:
             user.save()
         return user
+    
+
+
+class ProfileForm(BootstrapStyledForm, forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'first_name', 'last_name', 'phone', 'avatar']  # Указываем поля для редактирования
