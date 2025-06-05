@@ -1,0 +1,242 @@
+{% extends 'admin/base_site.html' %}
+
+{% block content %}
+<h1>Управление заказами</h1>
+
+<h2>Принятые заказы</h2>
+<div class="order-grid" id="accepted-orders-grid">
+    {% for order in accepted_orders %}
+        <div class="order-card" data-order-id="{{ order.pk }}">
+            <h3>Заказ #{{ order.sequence_number }}</h3>
+            <p>Статус: <span class="order-status">{{ order.status }}</span></p>
+            <p>Создан: {{ order.created_at }}</p>
+            <p>Пользователь: {{ order.user.username|default:"Гость" }}</p>
+            <a href="{% url 'admin:orders_order_change' order.pk %}">Детализация</a>
+
+            <h4>Позиции заказа:</h4>
+            <ul>
+                {% for item in order.orderitem_set.all %}
+                    <li>{{ item.dish.name }} - {{ item.quantity }} шт. ({{ item.price }} ₽ за шт.)</li>
+                {% empty %}
+                    <li>Нет позиций в заказе.</li>
+                {% endfor %}
+            </ul>
+            
+            <div>
+                <select class="status-select">
+                    {% for status in order.STATUS_CHOICES %}
+                        <option value="{{ status.0 }}" {% if order.status == status.0 %}selected{% endif %}>{{ status.1 }}</option>
+                    {% endfor %}
+                </select>
+                <button class="update-status-btn">Обновить статус</button>
+            </div>
+        </div>
+    {% empty %}
+        <p>Нет принятых заказов.</p>
+    {% endfor %}
+</div>
+
+<h2>Готовые заказы</h2>
+<div class="order-grid" id="completed-orders-grid">
+    {% for order in completed_orders %}
+        <div class="order-card" data-order-id="{{ order.pk }}">
+            <h3>Заказ #{{ order.sequence_number }}</h3>
+            <p>Статус: <span class="order-status">{{ order.status }}</span></p>
+            <p>Создан: {{ order.created_at }}</p>
+            <p>Пользователь: {{ order.user.username|default:"Гость" }}</p>
+            <a href="{% url 'admin:orders_order_change' order.pk %}">Детализация</a>
+
+            <h4>Позиции заказа:</h4>
+            <ul>
+                {% for item in order.orderitem_set.all %}
+                    <li>{{ item.dish.name }} - {{ item.quantity }} шт. ({{ item.price }} ₽ за шт.)</li>
+                {% empty %}
+                    <li>Нет позиций в заказе.</li>
+                {% endfor %}
+            </ul>
+            
+            <div>
+                <select class="status-select">
+                    {% for status in order.STATUS_CHOICES %}
+                        <option value="{{ status.0 }}" {% if order.status == status.0 %}selected{% endif %}>{{ status.1 }}</option>
+                    {% endfor %}
+                </select>
+                <button class="update-status-btn">Обновить статус</button>
+            </div>
+        </div>
+    {% empty %}
+        <p>Нет готовых заказов.</p>
+    {% endfor %}
+</div>
+
+<style>
+.order-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.order-card {
+    background: #fff; /* Белый фон, как у карточек меню */
+    border-radius: 15px; /* Скругленные углы */
+    box-shadow: 0 0px 20px rgba(0, 0, 0, 0.1); /* Тень, как у карточек меню */
+    transition: all 0.3s ease; /* Плавное изменение при наведении */
+    overflow: hidden;
+    padding: 15px; /* Внутренние отступы */
+    margin-bottom: 20px;
+    position: relative;
+    display: flex; /* Используем flexbox для выравнивания содержимого */
+    flex-direction: column; /* Элементы располагаются вертикально */
+}
+
+.order-card:hover {
+    transform: translateY(-5px); /* Подъем при наведении */
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15); /* Увеличение тени при наведении */
+}
+
+.order-card h3 {
+    color: #386641; /* Цвет заголовка, как в main.css */
+    font-weight: 600;
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.order-card p {
+    color: #6A994E; /* Цвет текста, как в main.css */
+    margin-bottom: 5px;
+}
+
+.order-card a {
+    color: #386641; /* Цвет ссылок, как в main.css */
+    text-decoration: none;
+    font-weight: 600;
+    margin-top: 10px; /* Отступ сверху для ссылки */
+    display: block; /* Ссылка занимает всю ширину для удобства */
+    text-align: center;
+}
+
+.order-card a:hover {
+    color: #6A994E; /* Цвет ссылки при наведении */
+}
+
+.order-card h4 {
+    color: #386641; /* Цвет заголовка секции, как в main.css */
+    font-weight: 600;
+    margin-top: 15px; /* Отступ сверху */
+    margin-bottom: 5px; /* Отступ снизу */
+    border-bottom: 1px solid rgba(56, 102, 65, 0.1); /* Тонкая линия внизу */
+    padding-bottom: 5px; /* Отступ под линией */
+}
+
+.order-card ul {
+    list-style: none; /* Убираем стандартные маркеры списка */
+    padding: 0; /* Убираем внутренний отступ списка */
+    margin-bottom: 10px; /* Отступ снизу */
+}
+
+.order-card li {
+    color: #6A994E; /* Цвет текста элементов списка */
+    margin-bottom: 3px; /* Отступ между элементами списка */
+    font-size: 0.9em; /* Немного уменьшим размер текста */
+}
+
+.order-card .status-select,
+.order-card .update-status-btn {
+    margin-top: 10px; /* Отступ сверху для элементов управления статусом */
+    width: 100%; /* Занимают всю ширину */
+    box-sizing: border-box; /* Учитываем padding и border в ширине */
+}
+
+.order-card .status-select {
+    padding: 8px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 5px;
+}
+
+.order-card .update-status-btn {
+    padding: 10px;
+    background: #386641; /* Цвет кнопки, как в main.css */
+    color: #F2E8CF; /* Цвет текста кнопки */
+    border: none;
+    border-radius: 5px; /* Скругленные углы кнопки */
+    transition: all 0.3s ease;
+}
+
+.order-card .update-status-btn:hover {
+    background: #6A994E; /* Цвет кнопки при наведении */
+    cursor: pointer;
+}
+
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const updateButtons = document.querySelectorAll('.update-status-btn');
+    const acceptedOrdersGrid = document.getElementById('accepted-orders-grid');
+    const completedOrdersGrid = document.getElementById('completed-orders-grid');
+
+    updateButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const card = this.closest('.order-card');
+            const orderId = card.dataset.orderId;
+            const statusSelect = card.querySelector('.status-select');
+            const newStatus = statusSelect.value;
+            const statusSpan = card.querySelector('.order-status');
+
+            // Отправка AJAX запроса для обновления статуса
+            fetch(`/orders/update-status/${orderId}/`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'X-CSRFToken': getCookie('csrftoken') // Получаем CSRF токен
+                },
+                body: `status=${newStatus}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    statusSpan.textContent = data.new_status; // Обновляем отображаемый статус
+
+                    // Динамическое перемещение карточки заказа
+                    if (data.new_status === 'Выполнен' || data.new_status === 'Завершён') {
+                        // Перемещаем карточку в секцию готовых заказов
+                        completedOrdersGrid.appendChild(card);
+                    } else {
+                        // В противном случае (например, 'Готовится' или 'Отменен'), перемещаем в секцию принятых
+                         acceptedOrdersGrid.appendChild(card);
+                    }
+
+                } else {
+                    alert('Ошибка при обновлении статуса: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+                alert('Произошла ошибка при отправлении запроса.');
+            });
+        });
+    });
+
+    // Функция для получения CSRF токена из куки
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+});
+</script>
+
+{% endblock %} 

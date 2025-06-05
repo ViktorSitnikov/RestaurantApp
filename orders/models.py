@@ -2,6 +2,7 @@ from django.db import models, transaction
 from menu.models import Dishes
 from accounts.models import CustomUser
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db.models import Max
 
 class Order(models.Model):
     MAX_ORDER_NUMBER = 500  # Максимальный номер заказа
@@ -23,23 +24,22 @@ class Order(models.Model):
     sequence_number = models.PositiveIntegerField(
         editable=False,
         db_index=True,
-        default=1
     )
     
     class Meta:
-        ordering = ['sequence_number']
+        ordering = ['-created_at']
 
     @classmethod
     def get_next_sequence_number(cls):
         with transaction.atomic():
-            # Блокируем таблицу для предотвращения гонки
-            last_order = cls.objects.select_for_update().order_by('-sequence_number').first()
+            # Получаем максимальный номер заказа
+            max_number = cls.objects.aggregate(Max('sequence_number'))['sequence_number__max']
             
-            if last_order:
-                next_num = last_order.sequence_number + 1
-                if next_num > cls.MAX_ORDER_NUMBER:
-                    next_num = 1
-            else:
+            if max_number is None:
+                return 1
+            
+            next_num = max_number + 1
+            if next_num > cls.MAX_ORDER_NUMBER:
                 next_num = 1
                 
             return next_num
@@ -52,7 +52,7 @@ class Order(models.Model):
     status = models.CharField(max_length=255, choices=STATUS_CHOICES, default='Готовится')
 
     def __str__(self):
-        return f"Заказ {self.id} от {self.user.username}"
+        return f"Заказ #{self.sequence_number} от {self.user.username if self.user else 'Гость'}"
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)

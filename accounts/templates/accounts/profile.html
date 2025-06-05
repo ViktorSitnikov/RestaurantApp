@@ -1,5 +1,6 @@
 ﻿{% extends 'menu/layout.html' %}
 {% load static %}
+{% load account_filters %}
 
 {% block content %}
 <div class="container py-5">
@@ -10,15 +11,15 @@
                     <h5>Профиль пользователя</h5>
                 </div>
                 <div class="nav flex-column">
-                    <a href="#" class="nav-link active">
+                    <a href="#profile-info" class="nav-link active" data-bs-toggle="tab">
                         <i class="fa-solid fa-user"></i>
                         <span>Основная информация</span>
                     </a>
-                    <a href="#" class="nav-link">
+                    <a href="#order-history" class="nav-link" data-bs-toggle="tab">
                         <i class="fa-solid fa-clock-rotate-left"></i>
                         <span>История заказов</span>
                     </a>
-                    <a href="#" class="nav-link">
+                    <a href="#settings" class="nav-link" data-bs-toggle="tab">
                         <i class="fa-solid fa-gear"></i>
                         <span>Настройки</span>
                     </a>
@@ -27,67 +28,136 @@
         </div>
         
         <div class="col-md-8">
-            <div class="bg-white p-4 rounded-3 shadow-sm">
-                <h4 class="mb-4" style="color: #386641;">Редактировать профиль</h4>
-                <form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="row align-items-center">
-                        <!-- Поле для аватара -->
-                        <div class="mb-3 col-6">
-                            
-                            <!-- Контейнер для предпросмотра аватара -->
-                            <div class="avatar-preview-container" style="cursor: pointer;">
-                                <!-- Скрытое поле для загрузки файла -->
-                                <input type="file" id="avatar" name="avatar" class="form-control d-none" accept="image/*" onchange="previewImage(event)">
-                                
-                                <!-- Блок предпросмотра аватара -->
-                                <div class="d-flex flex-column align-items-center">
-                                    {% if user.avatar %}
-                                        <div class="menu-img rounded-circle" style="width: 350px; height: 350px; object-fit: cover;">
-                                            <img id="avatarPreview" src="{{ user.avatar.url }}" alt="Аватар" 
-                                                class="rounded-circle" style="width: 350px; height: 350px; object-fit: cover;">
-                                            <div class="img-overlay">
-                                                <i class="fa-solid fa-magnifying-glass-plus"></i>
-                                            </div>
+            <div class="tab-content">
+                <!-- Основная информация -->
+                <div class="tab-pane fade show active" id="profile-info">
+                    <div class="bg-white p-4 rounded-3 shadow-sm">
+                        <h4 class="mb-4" style="color: #386641;">Редактировать профиль</h4>
+                        <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="row align-items-center">
+                                <!-- Поле для аватара -->
+                                <div class="mb-3 col-6">
+                                    <div class="avatar-preview-container" style="cursor: pointer;">
+                                        <input type="file" id="avatar" name="avatar" class="form-control d-none" accept="image/*" onchange="previewImage(event)">
+                                        <div class="d-flex flex-column align-items-center">
+                                            {% if user.avatar %}
+                                                <div class="menu-img rounded-circle" style="width: 350px; height: 350px; object-fit: cover;">
+                                                    <img id="avatarPreview" src="{{ user.avatar.url }}" alt="Аватар" 
+                                                        class="rounded-circle" style="width: 350px; height: 350px; object-fit: cover;">
+                                                    <div class="img-overlay">
+                                                        <i class="fa-solid fa-magnifying-glass-plus"></i>
+                                                    </div>
+                                                </div>
+                                            {% else %}
+                                                <div id="avatarPreview" class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-2" 
+                                                    style="width: 350px; height: 350px;">
+                                                    <i class="fa-solid fa-user fa-3x text-secondary"></i>
+                                                </div>
+                                            {% endif %}
                                         </div>
-                                    {% else %}
-                                        <div id="avatarPreview" class="d-flex align-items-center justify-content-center bg-light rounded-circle mb-2" 
-                                            style="width: 350px; height: 350px;">
-                                            <i class="fa-solid fa-user fa-3x text-secondary"></i>
-                                        </div>
-                                    {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="row col-6 mb-3">
+                                    <div class="mb-3">
+                                        <label for="username" class="form-label" style="color: #6A994E;">Имя пользователя</label>
+                                        {{ form.username }}
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="email" class="form-label" style="color: #6A994E;">Email</label>
+                                        {{ form.email }}
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="first_name" class="form-label" style="color: #6A994E;">Имя</label>
+                                        {{ form.first_name }}
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="last_name" class="form-label" style="color: #6A994E;">Фамилия</label>
+                                        {{ form.last_name }}
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="phone" class="form-label" style="color: #6A994E;">Телефон</label>
+                                        {{ form.phone }}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-
-
-                        <div class="row col-6 mb-3">
-                            <div class="mb-3">
-                                <label for="username" class="form-label" style="color: #6A994E;">Имя пользователя</label>
-                                {{ form.username }}
-                            </div>
-                            <div class="mb-3">
-                                <label for="email" class="form-label" style="color: #6A994E;">Email</label>
-                                {{ form.email }}
-                            </div>
-                            <div class="mb-3">
-                                <label for="first_name" class="form-label" style="color: #6A994E;">Имя</label>
-                                {{ form.first_name }}
-                            </div>
-                            <div class="mb-3">
-                                <label for="last_name" class="form-label" style="color: #6A994E;">Фамилия</label>
-                                {{ form.last_name }}
-                            </div>
-                            <div class="mb-3">
-                                <label for="phone" class="form-label" style="color: #6A994E;">Телефон</label>
-                                {{ form.phone }}
-                            </div>
-                        </div>
-
+                            <button type="submit" class="btn btn-success">Сохранить изменения</button>
+                        </form>
                     </div>
+                </div>
 
-                    <button type="submit" class="btn btn-success">Сохранить изменения</button>
-                </form>
+                <!-- История заказов -->
+                <div class="tab-pane fade" id="order-history">
+                    <div class="bg-white p-4 rounded-3 shadow-sm">
+                        <h4 class="mb-4" style="color: #386641;">История заказов</h4>
+                        {% if orders %}
+                            {% for order_data in orders %}
+                                <div class="card mb-4">
+                                    <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #f8f9fa;">
+                                        <div>
+                                            <h5 class="mb-0">Заказ #{{ order_data.order.sequence_number }}</h5>
+                                            <small class="text-muted">{{ order_data.order.created_at|date:"d.m.Y H:i" }}</small>
+                                        </div>
+                                        <span class="badge {% if order_data.order.status == 'Выполнен' %}bg-success{% elif order_data.order.status == 'Готовится' %}bg-warning{% elif order_data.order.status == 'Отменен' %}bg-danger{% else %}bg-secondary{% endif %}">
+                                            {{ order_data.order.status }}
+                                        </span>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Блюдо</th>
+                                                        <th>Количество</th>
+                                                        <th>Цена</th>
+                                                        <th>Сумма</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for item in order_data.items %}
+                                                        <tr>
+                                                            <td>{{ item.dish.name }}</td>
+                                                            <td>{{ item.quantity }}</td>
+                                                            <td>{{ item.price }} ₽</td>
+                                                            <td>{{ item.price|multiply:item.quantity }} ₽</td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                                <tfoot>
+                                                    <tr>
+                                                        <td colspan="3" class="text-end"><strong>Итого:</strong></td>
+                                                        <td><strong>{{ order_data.total }} ₽</strong></td>
+                                                    </tr>
+                                                </tfoot>
+                                            </table>
+                                        </div>
+                                        {% if order_data.order.comment %}
+                                            <div class="mt-3">
+                                                <strong>Комментарий к заказу:</strong>
+                                                <p class="mb-0">{{ order_data.order.comment }}</p>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                            <div class="text-center py-4">
+                                <i class="fa-solid fa-receipt fa-3x text-muted mb-3"></i>
+                                <h5>У вас пока нет заказов</h5>
+                                <p class="text-muted">Сделайте свой первый заказ в нашем ресторане!</p>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Настройки -->
+                <div class="tab-pane fade" id="settings">
+                    <div class="bg-white p-4 rounded-3 shadow-sm">
+                        <h4 class="mb-4" style="color: #386641;">Настройки</h4>
+                        <p>Здесь будут настройки профиля...</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -102,7 +172,6 @@
         reader.onload = function (e) {
             var preview = document.getElementById('avatarPreview');
             
-            // Если это div с иконкой, заменяем его на img
             if (preview.tagName === 'DIV') {
                 var img = document.createElement('img');
                 img.id = 'avatarPreview';
@@ -125,7 +194,7 @@
         }
     }
 
-    // Обработчик клика по контейнеру аватара для выбора файла
+    // Обработчик клика по контейнеру аватара
     document.addEventListener("DOMContentLoaded", function() {
         var avatarContainer = document.querySelector('.avatar-preview-container');
         if (avatarContainer) {
@@ -133,6 +202,21 @@
                 document.getElementById('avatar').click();
             });
         }
+
+        // Активация вкладок при клике на навигацию
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                
+                const targetId = this.getAttribute('href').substring(1);
+                document.querySelectorAll('.tab-pane').forEach(pane => {
+                    pane.classList.remove('show', 'active');
+                });
+                document.getElementById(targetId).classList.add('show', 'active');
+            });
+        });
     });
 </script>
 {% endblock %}

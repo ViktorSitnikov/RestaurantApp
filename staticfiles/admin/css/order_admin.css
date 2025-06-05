@@ -1,0 +1,161 @@
+/* Стили для списка заказов */
+#changelist table thead th {
+    background: #f8f9fa;
+    color: #386641;
+    font-weight: 600;
+}
+
+#changelist table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Стили для бейджей статуса */
+.badge {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+.bg-success {
+    background-color: #6A994E !important;
+}
+
+.bg-warning {
+    background-color: #E9C46A !important;
+    color: #000 !important;
+}
+
+.bg-danger {
+    background-color: #E76F51 !important;
+}
+
+.bg-info {
+    background-color: #2A9D8F !important;
+}
+
+/* Стили для кнопок действий */
+.button {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #386641;
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 12px;
+    transition: background-color 0.2s;
+}
+
+.button:hover {
+    background: #2A4D2F;
+    color: white;
+    text-decoration: none;
+}
+
+/* Стили для детальной страницы заказа */
+.field-status_badge .badge {
+    font-size: 14px;
+    padding: 8px 16px;
+}
+
+/* Стили для inline элементов заказа */
+.inline-group {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+.inline-related h3 {
+    background: #f8f9fa;
+    color: #386641;
+    padding: 12px;
+    margin: 0;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Стили для полей ввода */
+.form-row input, .form-row select, .form-row textarea {
+    border: 1px solid #dee2e6;
+    border-radius: 4px;
+    padding: 8px;
+}
+
+.form-row input:focus, .form-row select:focus, .form-row textarea:focus {
+    border-color: #386641;
+    box-shadow: 0 0 0 0.2rem rgba(56, 102, 65, 0.25);
+}
+
+/* Стили для заголовков секций */
+.module h2, .module caption {
+    background: #386641;
+    color: white;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Стили для таблицы элементов заказа */
+#orderitem_set-group .tabular tr.has_original td {
+    padding: 8px;
+}
+
+#orderitem_set-group .tabular tr.has_original:hover {
+    background-color: #f8f9fa;
+}
+
+/* Стили для кнопок сохранения */
+.submit-row {
+    background: #f8f9fa;
+    padding: 12px 14px;
+    border-top: 1px solid #dee2e6;
+}
+
+.submit-row input {
+    background: #386641;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.submit-row input:hover {
+    background: #2A4D2F;
+}
+
+/* Стили для поиска и фильтров */
+#changelist-filter h2 {
+    background: #386641;
+    color: white;
+    padding: 12px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+#changelist-filter li.selected a {
+    color: #386641;
+    font-weight: 500;
+}
+
+/* Стили для пагинации */
+.paginator {
+    background: #f8f9fa;
+    padding: 12px;
+    border-top: 1px solid #dee2e6;
+}
+
+.paginator a:link, .paginator a:visited {
+    background: #386641;
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    margin: 0 4px;
+}
+
+.paginator a:hover {
+    background: #2A4D2F;
+    color: white;
+    text-decoration: none;
+} 

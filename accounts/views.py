@@ -6,6 +6,7 @@ import logging
 from .forms import RegisterForm, ProfileForm
 from cart.models import Cart, CartItem
 from .models import CustomUser
+from orders.models import Order, OrderItem
 
 logger = logging.getLogger(__name__)
 
@@ -87,12 +88,28 @@ def login_view(request):
 
 def profile(request):
     if request.method == 'POST':
-        form = ProfileForm(request.POST, request.FILES, instance=request.user)  # Обрабатываем файлы (например, аватар)
+        form = ProfileForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
-            form.save()  # Сохраняем данные формы
-            return redirect('accounts:profile')  # Перенаправляем на страницу профиля после сохранения
+            form.save()
+            return redirect('accounts:profile')
     else:
-        form = ProfileForm(instance=request.user)  # Загружаем текущие данные пользователя
+        form = ProfileForm(instance=request.user)
 
-    return render(request, 'accounts/profile.html', {'form': form})
+    # Получаем историю заказов пользователя
+    orders = Order.objects.filter(user=request.user).order_by('-created_at')
+    orders_with_items = []
+    
+    for order in orders:
+        items = OrderItem.objects.filter(order=order)
+        total = sum(item.price * item.quantity for item in items)
+        orders_with_items.append({
+            'order': order,
+            'items': items,
+            'total': total
+        })
+
+    return render(request, 'accounts/profile.html', {
+        'form': form,
+        'orders': orders_with_items
+    })
 
